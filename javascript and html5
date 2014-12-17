@@ -5,38 +5,43 @@
 
 </canvas>
 <script>
-var xx=0;
-var yy=0;
-	var cw = 10;
+var zx;
+var zy;
+var score=0;
+    var xx=0;
+    var yy=0;
+    var cw = 10;
 var move="right";
 var snakearr;
-var food;
+var food={xx:0,yy:0};
 	var c = document.getElementById("canvas");
                            var ctx = c.getContext("2d");
 function init()
-	{
-		d = "right"; //default direction
+	{               score=0;
+		d = "right";
 		create();
-		cfood();
+		cookfood();
 		if(typeof game_loop != "undefined") clearInterval(game_loop);
-		game_loop = setInterval(paint, 60);
+		game_loop = setInterval(draw, 60);
 	}
 	init();
 
-create();
+
 function create()
 {var length=8;
  snakearr=[];
 for(var i=length-1;i>=0;i--)
 {snakearr.push({x:i,y:0});
-}}
-cfood();
-function cfood()
-	{
-		food =function() {
-			xx= Math.random()*(500-10)/10;
-			yy=Math.random()*(500-10)/10; 
-		};
+}
+
+}
+
+function cookfood()
+	{   
+		
+			food.xx= Math.round(Math.random()*(500-10)/10);
+			food.yy=Math.round(Math.random()*(500-10)/10); 
+		
 		
 	}
 function draw()
@@ -54,9 +59,17 @@ if(nx>50)nx=0;
 if(nx<0)nx=50;
 if(ny>50)ny=0;
 if(ny<0)ny=50;
+if(coll(nx,ny,snakearr))
+{init();
+}
+if(nx==food.xx&&ny==food.yy)
+{var tail={x:nx,y:ny};
+  cookfood();
+score++;}
+else{
  var tail=snakearr.pop();
  tail.x=nx;
-tail.y=ny;
+tail.y=ny;}
  snakearr.unshift(tail);
 paint(food.xx,food.yy);
   for(var i = 0; i < snakearr.length; i++)
@@ -65,6 +78,8 @@ paint(food.xx,food.yy);
 	                                                     
                                                                         paint(c.x,c.y);
 		}
+                                      var text = "Score: " + score;
+		ctx.fillText(text,10,10);
 
 }
 function paint(x,y)
@@ -77,6 +92,16 @@ function paint(x,y)
 	
 	
 	
+function coll(zx,zy,arr)
+{	for(var i = 0; i < arr.length; i++)
+	{
+		if(arr[i].x == zx && arr[i].y == zy)
+			 return true;
+		}
+		return false;
+	}
+	
+	
 document.onkeydown=function(e){
 var key = e.which;
                                     	if(key == "37" && move != "right") move = "left";
@@ -86,5 +111,6 @@ var key = e.which;
   
 
 </script>
+
 
 </body></html>
