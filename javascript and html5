@@ -84,7 +84,7 @@ paint(food.xx,food.yy);
 }
 function paint(x,y)
 {
-		ctx.fillStyle = "blue";
+		ctx.fillStyle = "red";
 		ctx.fillRect(x*cw, y*cw, cw, cw);
 		ctx.strokeStyle = "white";
 		ctx.strokeRect(x*cw, y*cw, cw, cw);
@@ -105,9 +105,12 @@ function coll(zx,zy,arr)
 document.onkeydown=function(e){
 var key = e.which;
                                     	if(key == "37" && move != "right") move = "left";
-		else if(key == "38" && move != "down") move = "up";
-		else if(key == "39" && move != "left") move = "right";
-		else if(key == "40" && move != "up") move = "down";}
+		else
+		if(key == "38" && move != "down") move = "up";
+		else
+		if(key == "39" && move != "left") move = "right";
+		else
+		if(key == "40" && move != "up") move = "down";}
   
 
 </script>
