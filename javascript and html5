@@ -1,0 +1,90 @@
+<html><head></head><body>
+
+
+<canvas id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+
+</canvas>
+<script>
+var xx=0;
+var yy=0;
+	var cw = 10;
+var move="right";
+var snakearr;
+var food;
+	var c = document.getElementById("canvas");
+                           var ctx = c.getContext("2d");
+function init()
+	{
+		d = "right"; //default direction
+		create();
+		cfood();
+		if(typeof game_loop != "undefined") clearInterval(game_loop);
+		game_loop = setInterval(paint, 60);
+	}
+	init();
+
+create();
+function create()
+{var length=8;
+ snakearr=[];
+for(var i=length-1;i>=0;i--)
+{snakearr.push({x:i,y:0});
+}}
+cfood();
+function cfood()
+	{
+		food =function() {
+			xx= Math.random()*(500-10)/10;
+			yy=Math.random()*(500-10)/10; 
+		};
+		
+	}
+function draw()
+{   ctx.fillStyle = "white";
+		ctx.fillRect(0, 0, 500, 500);
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(0, 0, 500, 500);
+var nx=snakearr[0].x;
+ var ny=snakearr[0].y;
+                                            if(move == "right") nx++;
+		else if(move == "left") nx--;
+		else if(move == "up") ny--;
+		else if(move == "down") ny++;
+if(nx>50)nx=0;
+if(nx<0)nx=50;
+if(ny>50)ny=0;
+if(ny<0)ny=50;
+ var tail=snakearr.pop();
+ tail.x=nx;
+tail.y=ny;
+ snakearr.unshift(tail);
+paint(food.xx,food.yy);
+  for(var i = 0; i < snakearr.length; i++)
+		{
+			var c = snakearr[i];
+	                                                     
+                                                                        paint(c.x,c.y);
+		}
+
+}
+function paint(x,y)
+{
+		ctx.fillStyle = "blue";
+		ctx.fillRect(x*cw, y*cw, cw, cw);
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(x*cw, y*cw, cw, cw);
+	}
+	
+	
+	
+document.onkeydown=function(e){
+var key = e.which;
+                                    	if(key == "37" && move != "right") move = "left";
+		else if(key == "38" && move != "down") move = "up";
+		else if(key == "39" && move != "left") move = "right";
+		else if(key == "40" && move != "up") move = "down";}
+  
+
+</script>
+
+</body></html>
